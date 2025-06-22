@@ -5,8 +5,21 @@ jobs:
   test_project:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Run Django unit tests
-      run:
-        python3 -m pip install --user django
-        python3 manage.py test
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'  # o la versione che usi nel tuo progetto
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install django
+          # Aggiungi qui altri pacchetti se necessario, es:
+          # pip install -r requirements.txt
+
+      - name: Run Django tests
+        run: |
+          python3 manage.py test
